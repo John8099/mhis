@@ -161,9 +161,101 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
   }
 }
 ?>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+  }
 
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .card .card-body {
+    padding: 20px;
+  }
+
+  .text-uppercase {
+    letter-spacing: 1px;
+  }
+
+
+
+  .row {
+    margin-bottom: 20px;
+  }
+
+  /* Chart-specific adjustments */
+  .chart-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    /* Ensures a uniform height for all charts */
+  }
+
+  /* Button styles */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+
+  canvas {
+    display: block;
+    max-width: 100%;
+    width: 100% !important;
+    height: 300px !important;
+  }
+
+  /* Print adjustments */
+  @media print {
+    .shadow {
+      box-shadow: none !important;
+    }
+
+    .card {
+      border: 1px solid #f8f9fc;
+    }
+
+    .sidebar,
+    .print,
+    .navbar,
+    .regPatients {
+      display: none;
+    }
+
+    .container {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .card {
+      page-break-inside: avoid;
+    }
+  }
+</style>
 <div class="container text-center">
-  <div class="row">
+  <div class="w-100 p-2 text-end print">
+    <button type="button" class="btn btn-primary" onclick="window.print()">
+      Print
+    </button>
+  </div>
+  <div class="row regPatients">
     <div class="col-md-12 mb-4">
       <div class="card shadow">
         <div class="card-body">
@@ -174,7 +266,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 mb-4">
+    <div class="col-6 mb-4">
       <div class="card shadow">
         <div class="card-body">
           <div class="text-uppercase text-primary fw-bold text-m mb-3">Registered Patients by Month</div>
@@ -182,7 +274,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
         </div>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
+    <div class="col-6 mb-4">
       <div class="card shadow">
         <div class="card-body">
           <div class="text-uppercase text-primary fw-bold text-m mb-3">Outcomes Distribution</div>
@@ -192,7 +284,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 mb-4">
+    <div class="col-6 mb-4">
       <div class="card shadow">
         <div class="card-body">
           <div class="text-uppercase text-primary fw-bold text-m mb-3">Livebirth Sex Distribution</div>
@@ -200,7 +292,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
         </div>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
+    <div class="col-6 mb-4">
       <div class="card shadow">
         <div class="card-body">
           <div class="text-uppercase text-primary fw-bold text-m mb-3">Weight of Livebirth by Sex</div>
@@ -210,7 +302,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 mb-4">
+    <div class="col-6 mb-4">
       <div class="card shadow">
         <div class="card-body">
           <div class="text-uppercase text-primary fw-bold text-m mb-3">Birth Attendant Distribution</div>
@@ -218,7 +310,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
         </div>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
+    <div class="col-6 mb-4">
       <div class="card shadow">
         <div class="card-body">
           <div class="text-uppercase text-primary fw-bold text-m mb-3">Place of Delivery</div>
@@ -230,6 +322,10 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<?php
+include('includes/scripts.php');
+include('includes/footer.php');
+?>
 <script>
   // BABY SEX DISTRIBUTION COUNT
   const maleCount = <?php echo $maleCount; ?>;
@@ -285,7 +381,7 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
   const male2500Plus = <?php echo $male2500Plus; ?>;
   const maleLessThan2500 = <?php echo $maleLessThan2500; ?>;
   const maleNotKnown = <?php echo $maleNotKnown; ?>;
-  
+
   const female2500Plus = <?php echo $female2500Plus; ?>;
   const femaleLessThan2500 = <?php echo $femaleLessThan2500; ?>;
   const femaleNotKnown = <?php echo $femaleNotKnown; ?>;
@@ -537,7 +633,3 @@ if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
     }
   });
 </script>
-<?php
-include('includes/scripts.php');
-include('includes/footer.php');
-?>

@@ -5,10 +5,10 @@
   }
 
   #content-wrapper {
-    background-size: cover; 
+    background-size: cover;
   }
 
-  .navbar-nav.sidebar.sidebar-dark.accordion{
+  .navbar-nav.sidebar.sidebar-dark.accordion {
     background-color: #095b94;
   }
 
@@ -21,32 +21,37 @@
   }
 
   .collapse-item:hover {
-    background-color: #095b94 !important; 
-    color: white !important; 
+    background-color: #095b94 !important;
+    color: white !important;
   }
 
   @media print {
     .navbar-nav {
       display: none;
     }
+
     .sticky-footer {
       display: none;
     }
+
     .card-header {
       display: none;
     }
+
     .input-group {
       display: none;
     }
-    * { 
-      overflow: hidden; 
+
+    * {
+      overflow: hidden;
     }
+
     @page {
-      size: auto; 
-      margin: 10mm; 
-      landscape: portrait; 
+      size: auto;
+      margin: 10mm;
+      landscape: portrait;
     }
-  }  
+  }
 </style>
 
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -73,47 +78,47 @@
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_patient-registration.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="bhs_patient-registration" aria-expanded="true">
-      <i class="fa-solid fa-pen-to-square"></i>   
+      <i class="fa-solid fa-pen-to-square"></i>
       <span>Add Patient Data</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
-  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_patient-records.php' || basename($_SERVER['PHP_SELF']) == 'bhs_patient-edit.php' || 
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_patient-view.php') ? 'active' : 'inactive'; ?>">
+  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_patient-records.php' || basename($_SERVER['PHP_SELF']) == 'bhs_patient-edit.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_patient-view.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="bhs_patient-records" aria-expanded="true">
       <i class="fa-solid fa-folder-open"></i>
       <span>Patient Records</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
-  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-patient.php' || 
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php' || 
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-other-services.php' ||
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_prenatal-schedule.php' || 
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_deworming-schedule.php' ||
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_tetanus-schedule.php' ||
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_calcium-schedule.php' ||
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_iron-schedule.php' ||
-                                  basename($_SERVER['PHP_SELF']) == 'bhs_iodine-schedule.php')? 'active' : ''; ?>">
+  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-patient.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-other-services.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_prenatal-schedule.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_deworming-schedule.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_tetanus-schedule.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_calcium-schedule.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_iron-schedule.php' ||
+                        basename($_SERVER['PHP_SELF']) == 'bhs_iodine-schedule.php') ? 'active' : ''; ?>">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseScheduling" aria-expanded="<?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-patient.php' || basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php') ? 'true' : 'false'; ?>" aria-controls="collapseScheduling">
       <i class="fa-regular fa-calendar-check"></i>
       <span>Book Schedule</span>
     </a>
     <hr class="sidebar-divider my-0">
-    <div id="collapseScheduling" class="collapse <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-patient.php' || 
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php' || 
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-other-services.php' || 
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_prenatal-schedule.php' || 
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_deworming-schedule.php' ||
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_tetanus-schedule.php' ||
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_calcium-schedule.php' ||
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_iron-schedule.php' ||
-                                                             basename($_SERVER['PHP_SELF']) == 'bhs_iodine-schedule.php') ? 'show' : ''; ?>" aria-labelledby="headingScheduling" data-parent="#accordionSidebar">
-        <div class="py-2 collapse-inner rounded">
-          <a class="collapse-item text-white <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php' || basename($_SERVER['PHP_SELF']) == 'bhs_prenatal-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_deworming-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_tetanus-schedule.php') ? 'active' : 'inactive'; ?>" href="bhs_select-schedule-services"><i class="fa-solid fa-hand-holding-medical"></i> <span> Services</span></a>
-          <hr class="sidebar-divider my-0">
-          <a class="collapse-item text-white text-wrap <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-other-services.php' || basename($_SERVER['PHP_SELF']) == 'bhs_calcium-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_iron-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_iodine-schedule.php') ? 'active' : 'inactive'; ?>" href="bhs_select-schedule-other-services"><i class="fa-solid fa-pills"></i> <span> Micronutrient Supplementation</span></a>
-        </div>
+    <div id="collapseScheduling" class="collapse <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-patient.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-other-services.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_prenatal-schedule.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_deworming-schedule.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_tetanus-schedule.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_calcium-schedule.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_iron-schedule.php' ||
+                                                    basename($_SERVER['PHP_SELF']) == 'bhs_iodine-schedule.php') ? 'show' : ''; ?>" aria-labelledby="headingScheduling" data-parent="#accordionSidebar">
+      <div class="py-2 collapse-inner rounded">
+        <a class="collapse-item text-white <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-services.php' || basename($_SERVER['PHP_SELF']) == 'bhs_prenatal-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_deworming-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_tetanus-schedule.php') ? 'active' : 'inactive'; ?>" href="bhs_select-schedule-services"><i class="fa-solid fa-hand-holding-medical"></i> <span> Services</span></a>
+        <hr class="sidebar-divider my-0">
+        <a class="collapse-item text-white text-wrap <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_select-schedule-other-services.php' || basename($_SERVER['PHP_SELF']) == 'bhs_calcium-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_iron-schedule.php' || basename($_SERVER['PHP_SELF']) == 'bhs_iodine-schedule.php') ? 'active' : 'inactive'; ?>" href="bhs_select-schedule-other-services"><i class="fa-solid fa-pills"></i> <span> Micronutrient Supplementation</span></a>
+      </div>
     </div>
   </li>
   <hr class="sidebar-divider my-0">
@@ -133,8 +138,15 @@
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_inventory.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="bhs_inventory" aria-expanded="true">
-    <i class="fa-solid fa-warehouse"></i>
+      <i class="fa-solid fa-warehouse"></i>
       <span>Inventory</span>
+    </a>
+  </li>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'bhs_inventory_history.php') ? 'active' : 'inactive'; ?>">
+    <a class="nav-link collapsed" href="bhs_inventory_history" aria-expanded="true">
+      <i class="fa-solid fa-list"></i>
+      <span>Inventory History</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
@@ -152,7 +164,7 @@
       </button>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown no-arrow d-sm-none">
-          <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-search fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
@@ -171,7 +183,7 @@
         </li>
         <div class="topbar-divider d-none d-sm-block"></div>
         <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">
               <h3 class="h6 mb-0 text-gray-800"> Welcome, Midwife <?php echo $_SESSION['user']; ?>!</h3>
             </span>
@@ -188,7 +200,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">

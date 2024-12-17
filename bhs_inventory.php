@@ -75,8 +75,10 @@ if ($result && mysqli_num_rows($result) > 0) {
                                                FROM inventory i 
                                                LEFT JOIN medicine m ON i.medicineID = m.medicineID 
                                                WHERE m.medicineName LIKE '%$search%'";
+
                                 $totalResult = mysqli_query($conn, $totalQuery);
                                 $totalRecords = mysqli_fetch_array($totalResult)[0];
+                                
                                 $totalPages = ceil($totalRecords / $limit);
 
                                 while ($inventoryRow = mysqli_fetch_assoc($inventoryResult)) {
