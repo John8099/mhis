@@ -132,8 +132,8 @@ if ($selectedBarangay) {
                   $predictionRiskArr = array(
                     "age" => "low",
                     "parity" => "low",
-                    "bmi" => "high",
-                    "cbc" => "high",
+                    "bmi" => "low",
+                    "cbc" => "low",
                     "gestational" => "low",
                     "syphilis" => "low",
                     "hepatitis" => "low"
@@ -144,13 +144,13 @@ if ($selectedBarangay) {
                     $riskLevel = 'High Risk';
                     $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["age"] = "high";
-                  } 
+                  }
                   // PARITY
                   if ($parity == 1 || $parity >= 5) {
                     $riskLevel = 'High Risk';
                     $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["parity"] = "high";
-                  } 
+                  }
                   // BMI
                   $bmi = $patient['patientBMI'] ?? null;
                   if ($bmi) {
@@ -158,7 +158,7 @@ if ($selectedBarangay) {
                       $riskLevel = 'High Risk';
                       $predictedOutcome = 'Pre-term';
                       $predictionRiskArr["bmi"] = "high";
-                    } 
+                    }
                   }
                   // GESTATIONAL AND CBC
                   $labQuery = "SELECT gestationalResult, cbcHgbHctResult FROM laboratory WHERE patientID = '$patientID'";
@@ -169,13 +169,13 @@ if ($selectedBarangay) {
                     $riskLevel = 'High Risk';
                     $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["cbc"] = "high";
-                  } 
+                  }
 
                   if ($labData['gestationalResult'] == 1) {
                     $riskLevel = 'High Risk';
                     $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["gestational"] = "high";
-                  } 
+                  }
 
                   // HEPATITIS AND SYPHILIS
                   $infectiousQuery = "SELECT hepatitisResult, syphilisResult FROM infectious WHERE patientID = '$patientID'";
@@ -186,7 +186,7 @@ if ($selectedBarangay) {
                     $riskLevel = 'High Risk';
                     $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["syphilis"] = "high";
-                  } 
+                  }
 
                   if ($infectiousData['hepatitisResult'] == 1) {
                     $riskLevel = 'High Risk';

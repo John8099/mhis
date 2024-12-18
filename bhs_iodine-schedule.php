@@ -42,7 +42,7 @@ if ($selectedBarangay) {
 }
 
 if (isset($selectedPatientID)) {
-  $iodineQuery = "SELECT p.*, i.iodTablet, i.iodDate
+  $iodineQuery = "SELECT p.*, i.iodID, i.iodTablet, i.iodDate
             FROM patient p
             LEFT JOIN iodine_info i ON p.patientID = i.patientID
             WHERE p.patientID = '$selectedPatientID';";
@@ -88,11 +88,11 @@ if (isset($selectedPatientID)) {
                 <select name="patient" class="form-control" id="patient" onchange="this.form.submit()">
                   <option value="0" disabled selected>Select Patient</option>
                   <?php
-                  foreach ($patients as $row) {
-                    $patientID = $row['patientID'];
-                    $patientFname = $row['patientFname'];
-                    $patientMname = $row['patientMname'];
-                    $patientLname = $row['patientLname'];
+                  foreach ($patients as $patient) {
+                    $patientID = $patient['patientID'];
+                    $patientFname = $patient['patientFname'];
+                    $patientMname = $patient['patientMname'];
+                    $patientLname = $patient['patientLname'];
 
                     $fullName = trim("$patientFname $patientMname $patientLname");
 
@@ -109,16 +109,16 @@ if (isset($selectedPatientID)) {
             </div>
           </form>
           <form action="bhs-functions.php" method="POST">
-            <input type="hidden" name="patientID" value="<?php echo isset($patientData['patientID']) ? htmlspecialchars($patientData['patientID']) : ''; ?>">
-            <input type="hidden" name="iodineID" value="<?php echo htmlspecialchars($iodineRow['iodID '] ?? ''); ?>">
+            <input type="hidden" name="patientID" value="<?php echo $selectedPatientID ?? ""; ?>">
+            <input type="hidden" name="iodineID" value="<?php echo $iodineRow['iodID'] ?? ""; ?>">
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="checkup_date">Check-up Date</label>
-                <input type="date" class="form-control" name="checkup_date" id="checkup_date" value="<?php echo htmlspecialchars($iodineRow['iodDate'] ?? ''); ?>" readonly>
+                <input type="date" class="form-control" name="checkup_date" id="checkup_date" value="<?php echo $iodineRow['iodDate'] ?? ''; ?>" <?= isset($iodineRow['iodDate']) ? "readonly" : "" ?>>
               </div>
               <div class="form-group col-md-6">
                 <label for="checkup_date">Number of Tablets</label>
-                <input type="number" class="form-control" name="checkup_num" id="checkup_num" value="<?php echo htmlspecialchars($iodineRow['iodTablet'] ?? '0'); ?>" readonly>
+                <input type="number" class="form-control" name="checkup_num" id="checkup_num" value="<?php echo $iodineRow['iodTablet'] ?? '0'; ?>" <?= isset($iodineRow['iodTablet']) ? "readonly" : "" ?>>
               </div>
             </div>
             <div class="text-right">

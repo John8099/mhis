@@ -242,8 +242,9 @@ function setIodineSchedule($classBHS)
 {
   $iodineID = $_POST['iodineID'];
   $patientID = $_POST['patientID'];
+  $checkup_date = $_POST['checkup_date'];
 
-  $result = $classBHS->setIodineSchedule($iodineID, $patientID);
+  $result = $classBHS->setIodineSchedule($iodineID, $patientID, $checkup_date);
 
   if ($result) {
     header("Location: bhs_patient-records");

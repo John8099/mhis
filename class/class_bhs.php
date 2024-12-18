@@ -158,8 +158,6 @@ if (!class_exists('BHS')) {
                                     calDate2 = " . ($calDate2 ? "'$calDate2'" : "NULL") . ", 
                                     calNum3 = " . ($calNum3 ? "'$calNum3'" : "NULL") . ", 
                                     calDate3 = " . ($calDate3 ? "'$calDate3'" : "NULL") . ", 
-                                    iodNum = " . ($iodNum ? "'$iodNum'" : "NULL") . ", 
-                                    iodDate = " . ($iodDate ? "'$iodDate'" : "NULL") . ", 
                                     nutritionalAssessment = " . ($nutritionalAssessment ? "'$nutritionalAssessment'" : "NULL") . " 
                                 WHERE patientID = '$patientID'";
       $resultCalcium = mysqli_query($conn, $queryCalcium);
@@ -305,9 +303,19 @@ if (!class_exists('BHS')) {
       }
     }
 
-    public function setIodineSchedule($iodineID, $patientID)
+    public function setIodineSchedule($iodineID, $patientID, $checkup_date)
     {
       global $conn;
+
+      $iodineInfo = mysqli_fetch_object(mysqli_query($conn, "SELECT * FROM iodine_info WHERE iodID ='$iodineID'"));
+      $iodineSched = mysqli_query($conn, "SELECT * FROM iodine_sched WHERE patientID ='$patientID' AND iodSchedDate='$checkup_date'");
+
+      if (mysqli_num_rows($iodineSched) == 0) {
+        mysqli_query(
+          $conn,
+          "INSERT INTO iodine_sched(patientID, iodSchedDate, iodSchedTablet, iodSchedStatus) VALUES('$patientID', '$checkup_date', '$iodineInfo->iodTablet', 'Pending')"
+        );
+      }
 
       $query = "UPDATE iodine_info 
                           SET isPosted = 1
@@ -352,6 +360,9 @@ if (!class_exists('BHS')) {
         case 'Calcium':
           $query = "UPDATE calcium_sched SET calSchedDate = '$scheduleDate', calSchedStatus = '$scheduleStatus' WHERE calSchedID = '$scheduleID'";
           break;
+        case 'Iodine':
+          $query = "UPDATE iodine_sched SET iodSchedDate = '$scheduleDate', iodSchedStatus = '$scheduleStatus' WHERE iodSchedID  = '$scheduleID'";
+          break;
         case 'Deworming':
           $query = "UPDATE deworming_sched SET dwSchedDate = '$scheduleDate', dwSchedStatus = '$scheduleStatus' WHERE dwSchedID = '$scheduleID'";
           break;
@@ -388,6 +399,14 @@ if (!class_exists('BHS')) {
                     FROM calcium_sched cal 
                     WHERE cal.calSchedID='$scheduleID'";
           $category = "calcium";
+          break;
+        case 'Iodine':
+          $query = "SELECT 
+                      iod.patientID AS 'patient_id',
+                      iod.iodSchedTablet AS 'quantity'
+                    FROM iodine_sched iod 
+                    WHERE iod.iodSchedID ='$scheduleID'";
+          $category = "iodine";
           break;
         case 'Deworming':
           $query = "SELECT 

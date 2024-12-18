@@ -74,6 +74,16 @@ $scheduleQueries = [
     ps.pnSchedStatus AS scheduleStatus 
   FROM `pre-natal_sched` ps LEFT JOIN patient p 
   ON ps.patientID = p.patientID 
+  WHERE p.barangayID IN (SELECT barangayID FROM barangay WHERE stationID = $stationID)",
+
+  "SELECT 
+    iod.iodSchedID  AS scheduleID, 
+    iod.iodSchedDate AS scheduleDate, 
+    'Iodine' AS scheduleType, 
+    p.patientID, CONCAT(p.patientFName, ' ', p.patientMname, ' ', p.patientLname) AS patientName, 
+    iod.iodSchedStatus AS scheduleStatus 
+  FROM `iodine_sched` iod LEFT JOIN patient p 
+  ON iod.patientID = p.patientID 
   WHERE p.barangayID IN (SELECT barangayID FROM barangay WHERE stationID = $stationID)"
 ];
 

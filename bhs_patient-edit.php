@@ -8,6 +8,18 @@ if (!isset($_SESSION['user_authenticated']) || $_SESSION['userType'] !== "BHS") 
 include('includes/header.php');
 include('includes/midwife_navbar.php');
 
+$username = $_SESSION['user'];
+
+$query = "SELECT u.*, s.stationName FROM user u LEFT JOIN station s ON u.stationID = s.stationID WHERE userUname = '$username' AND userType = 'BHS'";
+$result = mysqli_query($conn, $query);
+
+$stationID = "";
+
+if ($result && mysqli_num_rows($result) > 0) {
+  $user_data = mysqli_fetch_assoc($result);
+  $stationID = $user_data['stationID'];
+}
+
 if (isset($_GET['id'])) {
   $patientID = $_GET['id'];
   $query =  "SELECT p.*, cal.*, i.*, dew.*, inf.*, lab.*, mic.*, prn.*, pro.*, tet.*, b.barangayName
@@ -145,7 +157,7 @@ if (isset($_GET['id'])) {
                   <select name="patientBarangay" class="form-control" id="addStationBarangay" onchange="toggleBarangayButton()" required>
                     <option value="0" disabled selected>Select Barangay</option>
                     <?php
-                    $stationID = $row['stationID'];
+                    $stationID = $row['stationID'] ? $row['stationID'] : $stationID;
                     $barangayQuery = "SELECT * FROM barangay WHERE isActive = 1 and stationID = '$stationID' ORDER BY barangayName ASC";
                     $barangayResult = mysqli_query($conn, $barangayQuery);
                     $selectedBarangayID = $row['barangayID'];
