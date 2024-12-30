@@ -206,7 +206,6 @@ if ($selectedBarangay) {
                     }
                   }
 
-
                   if (count($predictionRiskArr) == ($lowCount + $highCount)) {
                     if (count($predictionRiskArr) == $lowCount) {
                       $riskLevel = "Low Risk";

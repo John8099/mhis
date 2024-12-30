@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_authenticated']) || $_SESSION['userType'] !== "RHU") {
-    header('Location: index.php');
-    exit();
+  header('Location: index.php');
+  exit();
 }
 
 include('includes/header.php');
@@ -14,14 +14,14 @@ $query = "SELECT u.*, s.stationName FROM user u LEFT JOIN station s ON u.station
 $result = mysqli_query($conn, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
-    $user_data = mysqli_fetch_assoc($result);
+  $user_data = mysqli_fetch_assoc($result);
 }
 
 // TOTAL REGISTERED PATIENTS
 $totalPatientsQuery = "SELECT COUNT(*) as totalPatients FROM patient p LEFT JOIN barangay b ON p.barangayID = b.barangayID";
 $totalPatientsResult = mysqli_query($conn, $totalPatientsQuery);
-if ($patientsRow = mysqli_fetch_assoc($totalPatientsResult)){
-    $totalPatients = $patientsRow['totalPatients'];
+if ($patientsRow = mysqli_fetch_assoc($totalPatientsResult)) {
+  $totalPatients = $patientsRow['totalPatients'];
 }
 
 // TOTAL NUMBER OF BABY'S SEX DISTRIBUTION
@@ -38,9 +38,9 @@ $maleCount = 0;
 $femaleCount = 0;
 
 if ($poBabySexResult && mysqli_num_rows($poBabySexResult) > 0) {
-    $poBabySexData = mysqli_fetch_assoc($poBabySexResult);
-    $maleCount = $poBabySexData['maleCount'];
-    $femaleCount = $poBabySexData['femaleCount'];
+  $poBabySexData = mysqli_fetch_assoc($poBabySexResult);
+  $maleCount = $poBabySexData['maleCount'];
+  $femaleCount = $poBabySexData['femaleCount'];
 }
 
 // TOTAL NUMBER OF BABY'S WEIGHT DISTRIBUTION BY SEX
@@ -61,13 +61,13 @@ $male2500Plus = $maleLessThan2500 = $maleNotKnown = 0;
 $female2500Plus = $femaleLessThan2500 = $femaleNotKnown = 0;
 
 if ($poBabyWeightResult && mysqli_num_rows($poBabyWeightResult) > 0) {
-    $poBabyWeightData = mysqli_fetch_assoc($poBabyWeightResult);
-    $male2500Plus = $poBabyWeightData['male2500Plus'];
-    $maleLessThan2500 = $poBabyWeightData['maleLessThan2500'];
-    $maleNotKnown = $poBabyWeightData['maleNotKnown'];
-    $female2500Plus = $poBabyWeightData['female2500Plus'];
-    $femaleLessThan2500 = $poBabyWeightData['femaleLessThan2500'];
-    $femaleNotKnown = $poBabyWeightData['femaleNotKnown'];
+  $poBabyWeightData = mysqli_fetch_assoc($poBabyWeightResult);
+  $male2500Plus = $poBabyWeightData['male2500Plus'];
+  $maleLessThan2500 = $poBabyWeightData['maleLessThan2500'];
+  $maleNotKnown = $poBabyWeightData['maleNotKnown'];
+  $female2500Plus = $poBabyWeightData['female2500Plus'];
+  $femaleLessThan2500 = $poBabyWeightData['femaleLessThan2500'];
+  $femaleNotKnown = $poBabyWeightData['femaleNotKnown'];
 }
 
 // TOTAL NUMBER OF BIRTH ATTENDANT TYPES
@@ -86,12 +86,12 @@ $poBirthAttendantResult = mysqli_query($conn, $poBirthAttendantQuery);
 $doctorCount = $nurseCount = $midwifeCount = $hilotCount = $otherCount = 0;
 
 if ($poBirthAttendantResult && mysqli_num_rows($poBirthAttendantResult) > 0) {
-    $poBirthAttendantData = mysqli_fetch_assoc($poBirthAttendantResult);
-    $doctorCount = $poBirthAttendantData['doctorCount'];
-    $nurseCount = $poBirthAttendantData['nurseCount'];
-    $midwifeCount = $poBirthAttendantData['midwifeCount'];
-    $hilotCount = $poBirthAttendantData['hilotCount'];
-    $otherCount = $poBirthAttendantData['otherCount'];
+  $poBirthAttendantData = mysqli_fetch_assoc($poBirthAttendantResult);
+  $doctorCount = $poBirthAttendantData['doctorCount'];
+  $nurseCount = $poBirthAttendantData['nurseCount'];
+  $midwifeCount = $poBirthAttendantData['midwifeCount'];
+  $hilotCount = $poBirthAttendantData['hilotCount'];
+  $otherCount = $poBirthAttendantData['otherCount'];
 }
 
 // TOTAL NUMBER OF PLACE OF DELIVERY DISTRIBUTION
@@ -111,13 +111,13 @@ $poPlaceTypeResult = mysqli_query($conn, $poPlaceTypeQuery);
 $bhsCount = $rhumiHCCount = $lyingInCount = $hospitalCount = $birthingHomesCount = $dohAmbulanceCount = 0;
 
 if ($poPlaceTypeResult && mysqli_num_rows($poPlaceTypeResult) > 0) {
-    $poPlaceTypeData = mysqli_fetch_assoc($poPlaceTypeResult);
-    $bhsCount = $poPlaceTypeData['bhsCount'];
-    $rhumiHCCount = $poPlaceTypeData['rhumiHCCount'];
-    $lyingInCount = $poPlaceTypeData['lyingInCount'];
-    $hospitalCount = $poPlaceTypeData['hospitalCount'];
-    $birthingHomesCount = $poPlaceTypeData['birthingHomesCount'];
-    $dohAmbulanceCount = $poPlaceTypeData['dohAmbulanceCount'];
+  $poPlaceTypeData = mysqli_fetch_assoc($poPlaceTypeResult);
+  $bhsCount = $poPlaceTypeData['bhsCount'];
+  $rhumiHCCount = $poPlaceTypeData['rhumiHCCount'];
+  $lyingInCount = $poPlaceTypeData['lyingInCount'];
+  $hospitalCount = $poPlaceTypeData['hospitalCount'];
+  $birthingHomesCount = $poPlaceTypeData['birthingHomesCount'];
+  $dohAmbulanceCount = $poPlaceTypeData['dohAmbulanceCount'];
 }
 
 // TOTAL NUMBER OF OUTCOME DISTRIBUTION
@@ -134,10 +134,10 @@ $poOutcomeResult = mysqli_query($conn, $poOutcomeQuery);
 $fullTermCount = $preTermCount = $fatalDeathCount = 0;
 
 if ($poOutcomeResult && mysqli_num_rows($poOutcomeResult) > 0) {
-    $poOutcomeData = mysqli_fetch_assoc($poOutcomeResult);
-    $fullTermCount = $poOutcomeData['fullTermCount'];
-    $preTermCount = $poOutcomeData['preTermCount'];
-    $fatalDeathCount = $poOutcomeData['fatalDeathCount'];
+  $poOutcomeData = mysqli_fetch_assoc($poOutcomeResult);
+  $fullTermCount = $poOutcomeData['fullTermCount'];
+  $preTermCount = $poOutcomeData['preTermCount'];
+  $fatalDeathCount = $poOutcomeData['fatalDeathCount'];
 }
 
 // Registered Patients by Month
@@ -154,348 +154,386 @@ $months = [];
 $patientCounts = [];
 
 if ($poPatientMonthResult && mysqli_num_rows($poPatientMonthResult) > 0) {
-    while ($row = mysqli_fetch_assoc($poPatientMonthResult)) {
-        $months[] = date('F', mktime(0, 0, 0, $row['month'], 10)); 
-        $patientCounts[] = $row['patientCount'];
-    }
+  while ($row = mysqli_fetch_assoc($poPatientMonthResult)) {
+    $months[] = date('F', mktime(0, 0, 0, $row['month'], 10));
+    $patientCounts[] = $row['patientCount'];
+  }
 }
 ?>
 
 <div class="container text-center">
-    <div class="row">
-        <div class="col-md-12 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Registered Patients</div>
-                    <h1 class="text-muted"><?php echo $totalPatients; ?></h1>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Registered Patients</div>
+          <h1 class="text-muted"><?php echo $totalPatients; ?></h1>
         </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Registered Patients by Month</div>
-                    <canvas id="poPatientMonthChart"></canvas>
-                </div>
-            </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Registered Patients by Month</div>
+          <canvas id="poPatientMonthChart"></canvas>
         </div>
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Outcomes Distribution</div>
-                    <canvas id="poOutcomeChart"></canvas>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Livebirth Sex Distribution</div>
-                    <canvas id="poBabySexChart"></canvas>
-                </div>
-            </div>
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Outcomes Distribution</div>
+          <canvas id="poOutcomeChart"></canvas>
         </div>
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Weight of Livebirth by Sex</div>
-                    <canvas id="poBabyWeightChart"></canvas>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Birth Attendant Distribution</div>
-                    <canvas id="poBirthAttendantChart"></canvas>
-                </div>
-            </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Livebirth Sex Distribution</div>
+          <canvas id="poBabySexChart"></canvas>
         </div>
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-uppercase text-primary fw-bold text-m mb-3">Place of Delivery</div>
-                    <canvas id="poPlaceTypeChart"></canvas>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Weight of Livebirth by Sex</div>
+          <canvas id="poBabyWeightChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Birth Attendant Distribution</div>
+          <canvas id="poBirthAttendantChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-uppercase text-primary fw-bold text-m mb-3">Place of Delivery</div>
+          <canvas id="poPlaceTypeChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // BABY SEX DISTRIBUTION COUNT
-    const maleCount = <?php echo $maleCount; ?>;
-    const femaleCount = <?php echo $femaleCount; ?>;
-    new Chart(document.getElementById('poBabySexChart').getContext('2d'), {
-        type: 'bar', 
-        data: {
-            labels: ['Male', 'Female'],
-            datasets: [{
-                data: [maleCount, femaleCount],
-                backgroundColor: ['#007bff', '#dc3545'],
-                borderWidth: 1
-            }]
+  // BABY SEX DISTRIBUTION COUNT
+  const maleCount = <?php echo $maleCount; ?>;
+  const femaleCount = <?php echo $femaleCount; ?>;
+  new Chart(document.getElementById('poBabySexChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Male', 'Female'],
+      datasets: [{
+        data: [maleCount, femaleCount],
+        backgroundColor: ['#007bff', '#dc3545'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (context) => {
-                            const value = context.raw || 0;
-                            const total = maleCount + femaleCount;
-                            return `${value} (${((value / total) * 100).toFixed(2)}%)`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 4 },
-                    title: { display: true, text: 'Number of Livebirths' }
-                },
-                x: {
-                    title: { display: true, text: 'Gender' }
-                }
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const value = context.raw || 0;
+              const total = maleCount + femaleCount;
+              return `${value} (${((value / total) * 100).toFixed(2)}%)`;
             }
+          }
         }
-    });
-
-    // WEIGHT DISTRIBUTION COUNT BY SEX
-    const male2500Plus = <?php echo $male2500Plus; ?>;
-    const maleLessThan2500 = <?php echo $maleLessThan2500; ?>;
-    const maleNotKnown = <?php echo $maleNotKnown; ?>;
-    const female2500Plus = <?php echo $female2500Plus; ?>;
-    const femaleLessThan2500 = <?php echo $femaleLessThan2500; ?>;
-    const femaleNotKnown = <?php echo $femaleNotKnown; ?>;
-
-    new Chart(document.getElementById('poBabyWeightChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['2500 grams and greater', 'less than 2500 grams', 'not known'],
-            datasets: [
-                {
-                    label: 'Male',
-                    data: [male2500Plus, maleLessThan2500, maleNotKnown],
-                    backgroundColor: '#007bff',
-                    borderColor: '#007bff',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Female',
-                    data: [female2500Plus, femaleLessThan2500, femaleNotKnown],
-                    backgroundColor: '#dc3545',
-                    borderColor: '#dc3545',
-                    borderWidth: 1
-                }
-            ]
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 4
+          },
+          title: {
+            display: true,
+            text: 'Number of Livebirths'
+          }
         },
-        options: {
-            responsive: true,
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: (context) => {
-                            const value = context.raw || 0;
-                            const total = male2500Plus + maleLessThan2500 + maleNotKnown +
-                                        female2500Plus + femaleLessThan2500 + femaleNotKnown;
-                            return `${context.dataset.label}: ${value} (${((value / total) * 100).toFixed(2)}%)`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 4 },
-                    title: { display: true, text: 'Number of Livebirths' }
-                },
-                x: {
-                    title: { display: true, text: 'Weight Category' }
-                }
-            }
+        x: {
+          title: {
+            display: true,
+            text: 'Gender'
+          }
         }
-    });
+      }
+    }
+  });
 
-    // BIRTH ATTENDANT DISTRIBUTION COUNT
-    const doctorCount = <?php echo $doctorCount; ?>;
-    const nurseCount = <?php echo $nurseCount; ?>;
-    const midwifeCount = <?php echo $midwifeCount; ?>;
-    const hilotCount = <?php echo $hilotCount; ?>;
-    const otherCount = <?php echo $otherCount; ?>;
+  // WEIGHT DISTRIBUTION COUNT BY SEX
+  const male2500Plus = <?php echo $male2500Plus; ?>;
+  const maleLessThan2500 = <?php echo $maleLessThan2500; ?>;
+  const maleNotKnown = <?php echo $maleNotKnown; ?>;
+  const female2500Plus = <?php echo $female2500Plus; ?>;
+  const femaleLessThan2500 = <?php echo $femaleLessThan2500; ?>;
+  const femaleNotKnown = <?php echo $femaleNotKnown; ?>;
 
-    new Chart(document.getElementById('poBirthAttendantChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['Doctor (MD)', 'Nurse (RN)', 'Midwife (MW)', 'Hilot/TBA (H)', 'Others (O)'],
-            datasets: [{
-                data: [doctorCount, nurseCount, midwifeCount, hilotCount, otherCount],
-                backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#fd7e14', '#6c757d'],
-                borderWidth: 1
-            }]
+  new Chart(document.getElementById('poBabyWeightChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['2500 grams and greater', 'less than 2500 grams', 'not known'],
+      datasets: [{
+          label: 'Male',
+          data: [male2500Plus, maleLessThan2500, maleNotKnown],
+          backgroundColor: '#007bff',
+          borderColor: '#007bff',
+          borderWidth: 1
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (context) => {
-                            const value = context.raw || 0;
-                            const total = doctorCount + nurseCount + midwifeCount + hilotCount + otherCount;
-                            return `${context.label}: ${value} (${((value / total) * 100).toFixed(2)}%)`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 4 },
-                    title: { display: true, text: 'Number of Livebirths' }
-                },
-                x: {
-                    title: { display: true, text: 'Birth Attendant' }
-                }
-            }
+        {
+          label: 'Female',
+          data: [female2500Plus, femaleLessThan2500, femaleNotKnown],
+          backgroundColor: '#dc3545',
+          borderColor: '#dc3545',
+          borderWidth: 1
         }
-    });
-
-    // PLACE OF DELIVERY DISTRIBUTION COUNT
-    const bhsCount = <?php echo $bhsCount; ?>;
-    const rhumiHCCount = <?php echo $rhumiHCCount; ?>;
-    const lyingInCount = <?php echo $lyingInCount; ?>;
-    const hospitalCount = <?php echo $hospitalCount; ?>;
-    const birthingHomesCount = <?php echo $birthingHomesCount; ?>;
-    const dohAmbulanceCount = <?php echo $dohAmbulanceCount; ?>;
-
-    new Chart(document.getElementById('poPlaceTypeChart').getContext('2d'), {
-        type: 'bar', 
-        data: {
-            labels: ['BHS', 'RHUMIHC', 'Lying-in', 'Hospital', 'Birthing Homes', 'DOH Licensed Ambulance'],
-            datasets: [{
-                label: 'Number of Deliveries', 
-                data: [bhsCount, rhumiHCCount, lyingInCount, hospitalCount, birthingHomesCount, dohAmbulanceCount],
-                backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#17a2b8', '#6c757d'],
-            }]
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const value = context.raw || 0;
+              const total = male2500Plus + maleLessThan2500 + maleNotKnown +
+                female2500Plus + femaleLessThan2500 + femaleNotKnown;
+              return `${context.dataset.label}: ${value} (${((value / total) * 100).toFixed(2)}%)`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 4
+          },
+          title: {
+            display: true,
+            text: 'Number of Livebirths'
+          }
         },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true, 
-                    ticks: { stepSize: 4 },
-                    title: {
-                        display: true,
-                        text: 'Number of Deliveries'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Place of Delivery'
-                    }
-                }
-            },
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (context) => {
-                            const value = context.raw || 0;
-                            return `${context.label}: ${value}`;
-                        }
-                    }
-                }
-            }
+        x: {
+          title: {
+            display: true,
+            text: 'Weight Category'
+          }
         }
-    });
+      }
+    }
+  });
 
-    // OUTCOME DISTRIBUTION COUNT
-    const fullTermCount = <?php echo $fullTermCount; ?>;
-    const preTermCount = <?php echo $preTermCount; ?>;
-    const fatalDeathCount = <?php echo $fatalDeathCount; ?>;
+  // BIRTH ATTENDANT DISTRIBUTION COUNT
+  const doctorCount = <?php echo $doctorCount; ?>;
+  const nurseCount = <?php echo $nurseCount; ?>;
+  const midwifeCount = <?php echo $midwifeCount; ?>;
+  const hilotCount = <?php echo $hilotCount; ?>;
+  const otherCount = <?php echo $otherCount; ?>;
 
-    new Chart(document.getElementById('poOutcomeChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['Full Term', 'Pre-Term', 'Fatal Death'],
-            datasets: [{
-                label: 'Outcome Distribution',
-                data: [fullTermCount, preTermCount, fatalDeathCount],
-                backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
-                borderWidth: 1
-            }]
+  new Chart(document.getElementById('poBirthAttendantChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Doctor (MD)', 'Nurse (RN)', 'Midwife (MW)', 'Hilot/TBA (H)', 'Others (O)'],
+      datasets: [{
+        data: [doctorCount, nurseCount, midwifeCount, hilotCount, otherCount],
+        backgroundColor: ['#28a745', '#17a2b8', '#ffc107', '#fd7e14', '#6c757d'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
         },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 4 },
-                }
-            },
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (context) => {
-                            const value = context.raw || 0;
-                            return `${context.label}: ${value}`;
-                        }
-                    }
-                }
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const value = context.raw || 0;
+              const total = doctorCount + nurseCount + midwifeCount + hilotCount + otherCount;
+              return `${context.label}: ${value} (${((value / total) * 100).toFixed(2)}%)`;
             }
+          }
         }
-    });
-
-    // PATIENT BY MONTH
-    var poPatientMonthCtx = document.getElementById('poPatientMonthChart').getContext('2d');
-    var poPatientMonthChart = new Chart(poPatientMonthCtx, {
-        type: 'bar',
-        data: {
-            labels: <?php echo json_encode($months); ?>, 
-            datasets: [{
-                label: 'Registered Patients',
-                data: <?php echo json_encode($patientCounts); ?>, 
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 4
+          },
+          title: {
+            display: true,
+            text: 'Number of Livebirths'
+          }
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 4 },
-                    title: {
-                        display: true,
-                        text: 'Number of Patients'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                }
-            }
+        x: {
+          title: {
+            display: true,
+            text: 'Birth Attendant'
+          }
         }
-    });
-    
+      }
+    }
+  });
+
+  // PLACE OF DELIVERY DISTRIBUTION COUNT
+  const bhsCount = <?php echo $bhsCount; ?>;
+  const rhumiHCCount = <?php echo $rhumiHCCount; ?>;
+  const lyingInCount = <?php echo $lyingInCount; ?>;
+  const hospitalCount = <?php echo $hospitalCount; ?>;
+  const birthingHomesCount = <?php echo $birthingHomesCount; ?>;
+  const dohAmbulanceCount = <?php echo $dohAmbulanceCount; ?>;
+
+  new Chart(document.getElementById('poPlaceTypeChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['BHS', 'RHUMIHC', 'Lying-in', 'Hospital', 'Birthing Homes', 'DOH Licensed Ambulance'],
+      datasets: [{
+        label: 'Number of Deliveries',
+        data: [bhsCount, rhumiHCCount, lyingInCount, hospitalCount, birthingHomesCount, dohAmbulanceCount],
+        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#17a2b8', '#6c757d'],
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 4
+          },
+          title: {
+            display: true,
+            text: 'Number of Deliveries'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Place of Delivery'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const value = context.raw || 0;
+              return `${context.label}: ${value}`;
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // OUTCOME DISTRIBUTION COUNT
+  const fullTermCount = <?php echo $fullTermCount; ?>;
+  const preTermCount = <?php echo $preTermCount; ?>;
+  const fatalDeathCount = <?php echo $fatalDeathCount; ?>;
+
+  new Chart(document.getElementById('poOutcomeChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Full Term', 'Pre-Term', 'Fatal Death'],
+      datasets: [{
+        label: 'Outcome Distribution',
+        data: [fullTermCount, preTermCount, fatalDeathCount],
+        backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 4
+          },
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const value = context.raw || 0;
+              return `${context.label}: ${value}`;
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // PATIENT BY MONTH
+  var poPatientMonthCtx = document.getElementById('poPatientMonthChart').getContext('2d');
+  var poPatientMonthChart = new Chart(poPatientMonthCtx, {
+    type: 'bar',
+    data: {
+      labels: <?php echo json_encode($months); ?>,
+      datasets: [{
+        label: 'Registered Patients',
+        data: <?php echo json_encode($patientCounts); ?>,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 4
+          },
+          title: {
+            display: true,
+            text: 'Number of Patients'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Month'
+          }
+        }
+      }
+    }
+  });
 </script>
 <?php
 include('includes/scripts.php');

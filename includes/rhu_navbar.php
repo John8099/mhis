@@ -5,7 +5,7 @@
   }
 
   #content-wrapper {
-    background-size: cover; 
+    background-size: cover;
   }
 
   .navbar-nav.sidebar.sidebar-dark.accordion {
@@ -24,35 +24,40 @@
     .navbar-nav {
       display: none;
     }
+
     .sticky-footer {
       display: none;
     }
+
     .card-header {
       display: none;
     }
+
     .input-group {
       display: none;
     }
-    * { 
-      overflow: hidden; 
+
+    * {
+      overflow: hidden;
     }
+
     @page {
-      size: auto; 
-      margin: 10mm; 
-      landscape: portrait; 
+      size: auto;
+      margin: 10mm;
+      landscape: portrait;
     }
   }
 
   .collapse-item {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: clip; 
+    text-overflow: clip;
   }
 </style>
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="rhu_dashboard.php">
     <div class="sidebar-brand-icon rotate-n-15">
-    <img class="img-profile rounded-circle" src="img/pregnant.jpg">
+      <img class="img-profile rounded-circle" src="img/pregnant.jpg">
     </div>
   </a>
   <h6 class="text-white text-center">Maternal Health <br>Information Systems for RHU</h6>
@@ -66,35 +71,35 @@
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_patient-records.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="rhu_patient-records" aria-expanded="true">
-    <i class="fa-solid fa-folder-open"></i>
-    <span>Patient Records</span>
+      <i class="fa-solid fa-folder-open"></i>
+      <span>Patient Records</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_management.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="rhu_management" aria-expanded="true">
-    <i class="fa-solid fa-cog"></i>
+      <i class="fa-solid fa-cog"></i>
       <span>Management</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_classification.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="rhu_classification" aria-expanded="true">
-    <i class="fa-solid fa-chart-column"></i>
+      <i class="fa-solid fa-chart-column"></i>
       <span>Classification</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_prediction.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="rhu_prediction" aria-expanded="true">
-    <i class="fa-solid fa-chart-line"></i>
+      <i class="fa-solid fa-chart-line"></i>
       <span>Prediction</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_inventory.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="rhu_inventory" aria-expanded="true">
-    <i class="fa-solid fa-warehouse"></i>
+      <i class="fa-solid fa-warehouse"></i>
       <span>Inventory</span>
     </a>
   </li>
