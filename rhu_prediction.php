@@ -372,5 +372,6 @@ $correctPredictions = 0;
   });
 </script>
 <?php
+include('includes/scripts.php');
 include('includes/footer.php');
 ?>
