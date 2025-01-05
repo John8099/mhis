@@ -133,6 +133,8 @@ $lastMonth = date("F", strtotime("last month"));
                   $bhsInventoryResult = mysqli_query($conn, $bhsInventoryQuery);
                   $bhsInventoryResult = mysqli_fetch_object($bhsInventoryResult);
 
+                  if (!$bhsInventoryResult) continue;
+
                   $categoryNames = [
                     "iron" => "Iron Sulfate",
                     "calcium" => "Calcium Carbonate",
