@@ -190,7 +190,7 @@ function setPrenatalSchedule($classBHS)
   $result = $classBHS->setPrenatalSchedule($pnID, $patientID);
 
   if ($result) {
-    header("Location: bhs_patient-records");
+    header("Location: bhs_scheduled-patients");
   } else {
     echo "<script>alert('An error occurred. Please try again.');window.location.href='./bhs_patient-edit';</script>";
   }
@@ -204,7 +204,7 @@ function setDewormingSchedule($classBHS)
   $result = $classBHS->setDewormingSchedule($dwID, $patientID);
 
   if ($result) {
-    header("Location: bhs_patient-records");
+    header("Location: bhs_scheduled-patients");
   } else {
     echo "<script>alert('An error occurred. Please try again.');window.location.href='./bhs_patient-edit';</script>";
   }
@@ -218,7 +218,7 @@ function setTetanusSchedule($classBHS)
   $result = $classBHS->setTetanusSchedule($ttID, $patientID);
 
   if ($result) {
-    header("Location: bhs_patient-records");
+    header("Location: bhs_scheduled-patients");
   } else {
     echo "<script>alert('An error occurred. Please try again.');window.location.href='./bhs_patient-edit';</script>";
   }
@@ -232,7 +232,7 @@ function setCalciumSchedule($classBHS)
   $result = $classBHS->setCalciumSchedule($calID, $patientID);
 
   if ($result) {
-    header("Location: bhs_patient-records");
+    header("Location: bhs_scheduled-patients");
   } else {
     echo "<script>alert('An error occurred. Please try again.');window.location.href='./bhs_patient-edit';</script>";
   }
@@ -247,7 +247,7 @@ function setIodineSchedule($classBHS)
   $result = $classBHS->setIodineSchedule($iodineID, $patientID, $checkup_date);
 
   if ($result) {
-    header("Location: bhs_patient-records");
+    header("Location: bhs_scheduled-patients");
   } else {
     echo "<script>alert('An error occurred. Please try again.');window.location.href='./bhs_patient-edit';</script>";
   }
@@ -261,7 +261,7 @@ function setMicronutrientSchedule($classBHS)
   $result = $classBHS->setMicronutrientSchedule($ironID, $patientID);
 
   if ($result) {
-    header("Location: bhs_patient-records");
+    header("Location: bhs_scheduled-patients");
   } else {
     echo "<script>alert('An error occurred. Please try again.');window.location.href='./bhs_patient-edit';</script>";
   }

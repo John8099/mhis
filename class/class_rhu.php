@@ -4,6 +4,68 @@ require './database/dbconfig.php';
 if (!class_exists('RHU')) {
   class RHU
   {
+    public function addRhuInventoryHistory($medicineID, $quantity, $category, $stationID = null)
+    {
+      global $conn;
+      $query = "";
+
+      if ($category == "added") {
+        $query = "INSERT INTO rhu_inventory_history(medicine_id, quantity, category)
+                          VALUES('$medicineID', '$quantity', '$category')";
+      } else {
+        $query = "INSERT INTO rhu_inventory_history(medicine_id, station_id, quantity, category)
+                          VALUES('$medicineID', '$stationID', '$quantity', '$category')";
+      }
+
+      $result = mysqli_query($conn, $query);
+
+      if ($result) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    public function updateBhsMed($inventoryID, $toAdd)
+    {
+      global $conn;
+
+      $query = "SELECT availableStock, medicineID FROM inventory WHERE inventoryID = '$inventoryID'";
+      $result = mysqli_query($conn, $query);
+
+      if ($result && mysqli_num_rows($result) > 0) {
+        $inventoryRow = mysqli_fetch_assoc($result);
+        $currentAvailableStock = $inventoryRow['availableStock'];
+        $medicineID = $inventoryRow['medicineID'];
+
+        $newAvailableStock = $currentAvailableStock + $toAdd;
+
+        $updateQuery = "UPDATE inventory
+                        SET availableStock = '$newAvailableStock'
+                        WHERE inventoryID = '$inventoryID'";
+        $updateResult = mysqli_query($conn, $updateQuery);
+
+        if ($updateResult) {
+          $updateStockQuery = "UPDATE medicine
+                                SET medicineStock = medicineStock - '$toAdd'
+                                WHERE medicineID = '$medicineID'";
+          mysqli_query($conn, $updateStockQuery);
+
+          $medicineQuery = "SELECT medicineName FROM medicine WHERE medicineID = '$medicineID'";
+          $medicineResult = mysqli_query($conn, $medicineQuery);
+          $medicineData = mysqli_fetch_object($medicineResult);
+          if ($medicineData) {
+            $this->addRhuInventoryHistory($medicineID, $toAdd, "distributed", $inventoryRow['stationID']);
+          }
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
     // STATION CRUD
     public function addStation($stationName)
     {
@@ -113,12 +175,29 @@ if (!class_exists('RHU')) {
     public function addMedicine($medicineName, $medicineCategory, $medicineStock)
     {
       global $conn;
+      $medicineName = strtoupper($medicineName);
 
-      $query = "INSERT INTO medicine(medicineName, medicineCategory, medicineStock, dateUpdate)
+      $checkMedicineQuery = "SELECT * FROM medicine WHERE UPPER(medicineName) = '$medicineName' AND medicineCategory = '$medicineCategory'";
+      $checkMedicineResult = mysqli_query($conn, $checkMedicineQuery);
+
+      $medicineData = null;
+
+      if (mysqli_num_rows($checkMedicineResult) > 0) {
+        $medicineData = mysqli_fetch_object($checkMedicineResult);
+
+        $query = "UPDATE medicine
+                  SET medicineStock = medicineStock + '$medicineStock', dateUpdate = CURDATE()
+                  WHERE medicineID = '$medicineData->medicineID'";
+      } else {
+        $query = "INSERT INTO medicine(medicineName, medicineCategory, medicineStock, dateUpdate)
                           VALUES('$medicineName', '$medicineCategory', '$medicineStock', CURDATE())";
+      }
+
       $result = mysqli_query($conn, $query);
 
       if ($result) {
+        $medicineID = $medicineData ? $medicineData->medicineID : mysqli_insert_id($conn);
+        $this->addRhuInventoryHistory($medicineID, $medicineStock, "added");
         return true;
       } else {
         return false;
@@ -129,12 +208,19 @@ if (!class_exists('RHU')) {
     {
       global $conn;
 
+      $medicineQuery = "SELECT * FROM medicine WHERE medicineID = '$medicineID'";
+      $medicineResult = mysqli_query($conn, $medicineQuery);
+      $medicineData = mysqli_fetch_object($medicineResult);
+
       $query = "UPDATE medicine
-                          SET medicineName = '$medicineName', medicineCategory = '$medicineCategory', medicineStock = '$medicineStock', dateUpdate = CURDATE()
-                          WHERE medicineID = '$medicineID'";
+                SET medicineName = '$medicineName', medicineCategory = '$medicineCategory', medicineStock = '$medicineStock', dateUpdate = CURDATE()
+                WHERE medicineID = '$medicineID'";
       $result = mysqli_query($conn, $query);
 
       if ($result) {
+        if ($medicineData->medicineStock < $medicineStock) {
+          $this->addRhuInventoryHistory($medicineID, $medicineStock - $medicineData->medicineStock, "added");
+        }
         return true;
       } else {
         return false;
@@ -163,6 +249,7 @@ if (!class_exists('RHU')) {
           $updateStockResult = mysqli_query($conn, $updateStockQuery);
 
           if ($updateStockResult) {
+            $this->addRhuInventoryHistory($medicineID, $availableStock, "distributed", $stationID);
             return true;
           } else {
             return false;
@@ -180,7 +267,7 @@ if (!class_exists('RHU')) {
     {
       global $conn;
 
-      $query = "SELECT availableStock, medicineID FROM inventory WHERE inventoryID = '$inventoryID'";
+      $query = "SELECT * FROM inventory WHERE inventoryID = '$inventoryID'";
       $result = mysqli_query($conn, $query);
 
       if ($result && mysqli_num_rows($result) > 0) {
@@ -189,18 +276,19 @@ if (!class_exists('RHU')) {
         $medicineID = $inventoryRow['medicineID'];
 
         $updateQuery = "UPDATE inventory
-                                    SET availableStock = '$newAvailableStock'
-                                    WHERE inventoryID = '$inventoryID'";
+                        SET availableStock = '$newAvailableStock'
+                        WHERE inventoryID = '$inventoryID'";
         $updateResult = mysqli_query($conn, $updateQuery);
 
         if ($updateResult) {
           $stockDifference = $newAvailableStock - $currentAvailableStock;
 
           $updateStockQuery = "UPDATE medicine
-                                             SET medicineStock = medicineStock - '$stockDifference'
-                                             WHERE medicineID = '$medicineID'";
+                                SET medicineStock = medicineStock - '$stockDifference'
+                                WHERE medicineID = '$medicineID'";
           mysqli_query($conn, $updateStockQuery);
 
+          $this->addRhuInventoryHistory($medicineID, $stockDifference, "distributed", $inventoryRow['stationID']);
           return true;
         } else {
           return false;

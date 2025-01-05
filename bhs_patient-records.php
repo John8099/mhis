@@ -48,37 +48,38 @@ if ($result && mysqli_num_rows($result) > 0) {
             $search_query = isset($_GET['search_query']) ? $_GET['search_query'] : '';
             $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
 
-            $query = "SELECT p.*, 
-                                         b.barangayName, 
-                                         IF(
-                                            pro.poTerminatedDate IS NOT NULL AND 
-                                            pro.poOutcome IS NOT NULL AND 
-                                            pro.poBabySex IS NOT NULL AND 
-                                            pro.poBabyWeight IS NOT NULL AND 
-                                            pro.poDeliveryType IS NOT NULL AND 
-                                            pro.poPlaceType IS NOT NULL AND 
-                                            pro.poBirthAttendant IS NOT NULL AND 
-                                            pro.poDeliveryDate IS NOT NULL AND 
-                                            pro.poDeliveryTime IS NOT NULL, 
-                                            'Complete', 'In Progress') AS status
-                                  FROM patient p 
-                                  LEFT JOIN barangay b ON p.barangayID = b.barangayID 
-                                  LEFT JOIN calcium_info cal ON p.patientID = cal.patientID 
-                                  LEFT JOIN deworming_info dew ON p.patientID = dew.patientID 
-                                  LEFT JOIN infectious inf ON p.patientID = inf.patientID 
-                                  LEFT JOIN laboratory lab ON p.patientID = lab.patientID 
-                                  LEFT JOIN micronutrient_info mic ON p.patientID = mic.patientID 
-                                  LEFT JOIN `pre-natal_info` prn ON p.patientID = prn.patientID 
-                                  LEFT JOIN pregnancy_outcome pro ON p.patientID = pro.patientID 
-                                  LEFT JOIN tetanus_info tet ON p.patientID = tet.patientID 
-                                  WHERE b.stationID = '$stationID'";
+            $query = "SELECT 
+                        p.*, 
+                        b.barangayName, 
+                        IF(
+                          pro.poTerminatedDate IS NOT NULL AND 
+                          pro.poOutcome IS NOT NULL AND 
+                          pro.poBabySex IS NOT NULL AND 
+                          pro.poBabyWeight IS NOT NULL AND 
+                          pro.poDeliveryType IS NOT NULL AND 
+                          pro.poPlaceType IS NOT NULL AND 
+                          pro.poBirthAttendant IS NOT NULL AND 
+                          pro.poDeliveryDate IS NOT NULL AND 
+                          pro.poDeliveryTime IS NOT NULL, 
+                          'Complete', 'In Progress') AS status
+                      FROM patient p 
+                      LEFT JOIN barangay b ON p.barangayID = b.barangayID 
+                      LEFT JOIN calcium_info cal ON p.patientID = cal.patientID 
+                      LEFT JOIN deworming_info dew ON p.patientID = dew.patientID 
+                      LEFT JOIN infectious inf ON p.patientID = inf.patientID 
+                      LEFT JOIN laboratory lab ON p.patientID = lab.patientID 
+                      LEFT JOIN micronutrient_info mic ON p.patientID = mic.patientID 
+                      LEFT JOIN `pre-natal_info` prn ON p.patientID = prn.patientID 
+                      LEFT JOIN pregnancy_outcome pro ON p.patientID = pro.patientID 
+                      LEFT JOIN tetanus_info tet ON p.patientID = tet.patientID 
+                      WHERE b.stationID = '$stationID'";
 
             if (!empty($search_query)) {
               $query .= " AND (patientFname LIKE '%$search_query%' 
-                                            OR patientMname LIKE '%$search_query%' 
-                                            OR patientLname LIKE '%$search_query%' 
-                                            OR patientSerialNumber LIKE '%$search_query%' 
-                                            OR barangayName LIKE '%$search_query%')";
+                          OR patientMname LIKE '%$search_query%' 
+                          OR patientLname LIKE '%$search_query%' 
+                          OR patientSerialNumber LIKE '%$search_query%' 
+                          OR barangayName LIKE '%$search_query%')";
             }
 
             $completion_conditions = "
@@ -94,19 +95,12 @@ if ($result && mysqli_num_rows($result) > 0) {
               $query .= " AND NOT ($completion_conditions)";
             }
 
-            $total_results = mysqli_query($conn, $query);
-            $total_rows = mysqli_num_rows($total_results);
-            $total_pages = ceil($total_rows / $results_per_page);
-
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $offset = ($current_page - 1) * $results_per_page;
-
-            $query .= " ORDER BY patientID DESC LIMIT $offset, $results_per_page";
+            $query .= " ORDER BY patientID DESC";
             $result = mysqli_query($conn, $query);
 
             ?>
 
-            <table class="table table-bordered table-hover text-center">
+            <table class="table table-bordered table-hover text-center" id="table-patient-records">
               <thead>
                 <tr>
                   <th>Patient Serial Number</th>
@@ -139,23 +133,6 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <?php endwhile; ?>
               </tbody>
             </table>
-
-            <!-- Pagination -->
-            <?php if ($total_pages > 1): ?>
-              <div class="d-flex justify-content-center">
-                <ul class="pagination">
-                  <?php
-                  for ($page = 1; $page <= $total_pages; $page++):
-                    $active_class = ($page == $current_page) ? 'active' : ''; ?>
-                    <li class="page-item <?php echo $active_class; ?>">
-                      <a class="page-link" href="bhs_patient-records?page=<?php echo $page; ?>&search_query=<?php echo urlencode($search_query); ?>&status_filter=<?php echo $status_filter; ?>">
-                        <?php echo $page; ?>
-                      </a>
-                    </li>
-                  <?php endfor; ?>
-                </ul>
-              </div>
-            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -167,3 +144,13 @@ if ($result && mysqli_num_rows($result) > 0) {
 include('includes/scripts.php');
 include('includes/footer.php');
 ?>
+<script>
+  $("#table-patient-records").DataTable({
+    paging: true,
+    lengthChange: false,
+    autoWidth: false,
+    responsive: true,
+    ordering: false,
+    searching: false
+  })
+</script>

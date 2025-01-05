@@ -35,9 +35,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case isset($_POST['modifyInventory']):
       modifyInventory($classRHU);
       break;
+    case isset($_POST['updateBhsMed']):
+      updateBhsMed($classRHU);
+      break;
     default:
       echo "<script>alert('Invalid action.');window.location.href='index';</script>";
       break;
+  }
+}
+
+function updateBhsMed($classRHU)
+{
+  $inventory_id = $_POST['inventory_id'];
+  $toAdd = $_POST['toAdd'];
+
+  $result = $classRHU->updateBhsMed($inventory_id, $toAdd);
+
+  if ($result) {
+    header("Location: rhu_projection");
+  } else {
+    echo "<script>alert('An error occurred. Please try again.');window.location.href='./rhu_projection';</script>";
   }
 }
 

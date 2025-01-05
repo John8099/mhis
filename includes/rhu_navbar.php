@@ -97,10 +97,24 @@
     </a>
   </li>
   <hr class="sidebar-divider my-0">
+  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_projection.php') ? 'active' : 'inactive'; ?>">
+    <a class="nav-link collapsed" href="rhu_projection" aria-expanded="true">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Projection</span>
+    </a>
+  </li>
+  <hr class="sidebar-divider my-0">
   <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_inventory.php') ? 'active' : 'inactive'; ?>">
     <a class="nav-link collapsed" href="rhu_inventory" aria-expanded="true">
       <i class="fa-solid fa-warehouse"></i>
       <span>Inventory</span>
+    </a>
+  </li>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'rhu_inventory_history.php') ? 'active' : 'inactive'; ?>">
+    <a class="nav-link collapsed" href="rhu_inventory_history" aria-expanded="true">
+      <i class="fa-solid fa-list"></i>
+      <span>Inventory History</span>
     </a>
   </li>
   <hr class="sidebar-divider my-0">

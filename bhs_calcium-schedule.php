@@ -27,7 +27,7 @@ $patients = [];
 $patientSerialNumber = '';
 
 if ($selectedBarangay) {
-  $patientQuery = "SELECT * FROM patient WHERE barangayID = '$selectedBarangay' ORDER BY patientFname ASC";
+  $patientQuery = "SELECT * FROM patient WHERE barangayID = '$selectedBarangay'  AND patientID NOT IN(SELECT c.patientID FROM calcium_sched c) ORDER BY patientFname ASC";
   $patientResult = mysqli_query($conn, $patientQuery);
 
   while ($row = mysqli_fetch_assoc($patientResult)) {

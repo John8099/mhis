@@ -28,7 +28,7 @@ $patients = [];
 $patientSerialNumber = '';
 
 if ($selectedBarangay) {
-  $patientQuery = "SELECT * FROM patient WHERE barangayID = '$selectedBarangay' ORDER BY patientFname ASC";
+  $patientQuery = "SELECT * FROM patient WHERE barangayID = '$selectedBarangay' AND patientID NOT IN(SELECT d.patientID FROM deworming_sched d) ORDER BY patientFname ASC";
   $patientResult = mysqli_query($conn, $patientQuery);
 
   while ($row = mysqli_fetch_assoc($patientResult)) {
@@ -109,7 +109,7 @@ if (isset($selectedPatientID)) {
             </div>
           </form>
           <form action="bhs-functions.php" method="POST">
-            <input type="hidden" name="patientID" value="<?php echo isset($patientData['patientID']) ? htmlspecialchars($patientData['patientID']) : ''; ?>">
+            <input type="hidden" name="patientID" value="<?php echo isset($dewormingRow['patientID']) ? htmlspecialchars($dewormingRow['patientID']) : ''; ?>">
             <input type="hidden" name="dwID" value="<?php echo htmlspecialchars($dewormingRow['dwID'] ?? ''); ?>">
             <div class="form-group row">
               <div class="form-group col-md-6">

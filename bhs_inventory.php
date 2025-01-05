@@ -72,10 +72,10 @@ if ($result && mysqli_num_rows($result) > 0) {
               ];
 
               $totalQuery = "SELECT COUNT(*), m.medicineName 
-                                               FROM inventory i 
-                                               LEFT JOIN medicine m ON i.medicineID = m.medicineID 
-                                               WHERE m.medicineName LIKE '%$search%'";
-
+                            FROM inventory i 
+                            LEFT JOIN medicine m ON i.medicineID = m.medicineID 
+                            WHERE m.medicineName LIKE '%$search%' AND i.stationID = '$stationID'";
+  
               $totalResult = mysqli_query($conn, $totalQuery);
               $totalRecords = mysqli_fetch_array($totalResult)[0];
 

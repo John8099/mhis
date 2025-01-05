@@ -141,22 +141,22 @@ if ($selectedBarangay) {
 
                   // AGE
                   if ($patientAge < 18 || $patientAge > 35) {
-                    $riskLevel = 'High Risk';
-                    $predictedOutcome = 'Pre-term';
+                    // $riskLevel = 'High Risk';
+                    // $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["age"] = "high";
                   }
                   // PARITY
                   if ($parity == 1 || $parity >= 5) {
-                    $riskLevel = 'High Risk';
-                    $predictedOutcome = 'Pre-term';
+                    // $riskLevel = 'High Risk';
+                    // $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["parity"] = "high";
                   }
                   // BMI
                   $bmi = $patient['patientBMI'] ?? null;
                   if ($bmi) {
                     if ($bmi < 18.5 || $bmi > 29.9) {
-                      $riskLevel = 'High Risk';
-                      $predictedOutcome = 'Pre-term';
+                      // $riskLevel = 'High Risk';
+                      // $predictedOutcome = 'Pre-term';
                       $predictionRiskArr["bmi"] = "high";
                     }
                   }
@@ -166,14 +166,14 @@ if ($selectedBarangay) {
                   $labData = mysqli_fetch_assoc($labResult);
 
                   if ($labData['cbcHgbHctResult'] == 1) {
-                    $riskLevel = 'High Risk';
-                    $predictedOutcome = 'Pre-term';
+                    // $riskLevel = 'High Risk';
+                    // $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["cbc"] = "high";
                   }
 
                   if ($labData['gestationalResult'] == 1) {
-                    $riskLevel = 'High Risk';
-                    $predictedOutcome = 'Pre-term';
+                    // $riskLevel = 'High Risk';
+                    // $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["gestational"] = "high";
                   }
 
@@ -183,14 +183,14 @@ if ($selectedBarangay) {
                   $infectiousData = mysqli_fetch_assoc($infectiousResult);
 
                   if ($infectiousData['syphilisResult'] == 1) {
-                    $riskLevel = 'High Risk';
-                    $predictedOutcome = 'Pre-term';
+                    // $riskLevel = 'High Risk';
+                    // $predictedOutcome = 'Pre-term';
                     $predictionRiskArr["syphilis"] = "high";
                   }
 
                   if ($infectiousData['hepatitisResult'] == 1) {
-                    $riskLevel = 'High Risk';
-                    $predictedOutcome = 'Fatal Death';
+                    // $riskLevel = 'High Risk';
+                    // $predictedOutcome = 'Fatal Death';
                     $predictionRiskArr["hepatitis"] = "high";
                   }
 
@@ -210,10 +210,10 @@ if ($selectedBarangay) {
                     if (count($predictionRiskArr) == $lowCount) {
                       $riskLevel = "Low Risk";
                       $predictedOutcome = "Full term";
-                    } else if ($highCount >= 2 && $highCount >= 3) {
+                    } else if ($highCount >= 2 && $highCount < 3) {
                       $riskLevel = "High Risk";
                       $predictedOutcome = "Pre-term";
-                    } else if (($highCount >= 3 && $highCount < 3) || count($predictionRiskArr) == $highCount) {
+                    } else if ($highCount >= 3) {
                       $riskLevel = "High Risk";
                       $predictedOutcome = "Fatal Death";
                     }

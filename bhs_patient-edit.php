@@ -372,11 +372,11 @@ if (isset($_GET['id'])) {
                   <div class="form-group col-md-4">
                     <label><strong>Iodine Capsule (Date 2 capsules given)</strong></label>
                     <label>1st trimester</label>
-                    <select class="form-control mb-2" id="iodine_1st_tri_num" name="iodNum">
+                    <select class="form-control mb-2" id="iodine_1st_tri_num" name="iodTablet">
                       <option value="0" disabled <?php echo ($row['iodTablet'] == 0) ? 'selected' : ''; ?>>Select number of tablets</option>
                       <option value="1" <?php echo ($row['iodTablet'] == 1) ? 'selected' : ''; ?>>1</option>
                     </select>
-                    <input type="date" class="form-control" id="iodTrimester1" name="iodDate" placeholder="Date" value="<?php echo $row['iodDate'] ?>" readonly>
+                    <input type="date" class="form-control" id="iodTrimester1" name="iodDate" placeholder="Date" value="<?php echo $row['iodDate'] ?>" <?= $row["iodDate"] ? "readonly" : "" ?>>
                   </div>
                   <div class="form-group col-md-4">
                     <label><strong>Nutritional Assessment (BMI for 1st Tri)</strong></label>

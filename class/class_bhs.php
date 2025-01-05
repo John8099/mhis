@@ -145,8 +145,6 @@ if (!class_exists('BHS')) {
       $calDate2 = $patientData['calDate2'];
       $calNum3 = $patientData['calNum3'];
       $calDate3 = $patientData['calDate3'];
-      $iodNum = $patientData['iodNum'];
-      $iodDate = $patientData['iodDate'];
       $nutritionalAssessment = $patientData['nutritionalAssessment'];
 
       // Update Query
@@ -161,6 +159,16 @@ if (!class_exists('BHS')) {
                                     nutritionalAssessment = " . ($nutritionalAssessment ? "'$nutritionalAssessment'" : "NULL") . " 
                                 WHERE patientID = '$patientID'";
       $resultCalcium = mysqli_query($conn, $queryCalcium);
+
+      // IODINE
+      $iodTablet = $patientData['iodTablet'];
+      $iodDate = $patientData['iodDate'];
+      $queryIodine = "UPDATE iodine_info 
+                                SET 
+                                    iodTablet = " . ($iodTablet ? "'$iodTablet'" : "NULL") . ",
+                                    iodDate = " . ($iodDate ? "'$iodDate'" : "NULL") . " 
+                                WHERE patientID = '$patientID'";
+      $resultIodine = mysqli_query($conn, $queryIodine);
 
       // DEWORMING
       $dwDate = $patientData['dwDate'];
@@ -232,7 +240,7 @@ if (!class_exists('BHS')) {
                                  WHERE patientID = '$patientID'";
       $resultOutcome = mysqli_query($conn, $queryOutcome);
 
-      if ($resultPatient && $resultPrenatal && $resultTetanus && $resultMicronutrient && $resultCalcium && $resultDeworming && $resultInfectious && $resultLaboratory && $resultOutcome) {
+      if ($resultPatient && $resultPrenatal && $resultTetanus && $resultMicronutrient && $resultCalcium && $resultIodine && $resultDeworming && $resultInfectious && $resultLaboratory && $resultOutcome) {
         return true;
       } else {
         return false;
@@ -350,7 +358,15 @@ if (!class_exists('BHS')) {
       global $conn;
 
       if ($scheduleStatus == "Completed") {
-        $this->addInventoryHistory($scheduleID, $scheduleType, $stationId);
+        $schedTypeArr = array(
+          "Calcium",
+          "Iodine",
+          "Deworming",
+          "Micronutrient"
+        );
+        if (in_array($scheduleType, $schedTypeArr)) {
+          $this->addInventoryHistory($scheduleID, $scheduleType, $stationId);
+        }
       }
 
       switch ($scheduleType) {

@@ -153,7 +153,7 @@ foreach ($schedules as $schedule) {
         <form action="bhs-functions.php" method="POST">
           <div class="modal-header">
             <h5 class="modal-title" id="eventModalLabel">Schedule Details</h5>
-            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <input type="hidden" id="modalScheduleID" name="modalScheduleID">
@@ -205,8 +205,8 @@ foreach ($schedules as $schedule) {
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" name="updatePatientSchedule" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" name="updatePatientSchedule" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </form>
       </div>
