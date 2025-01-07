@@ -70,7 +70,12 @@ $search = isset($_GET['inventory_search']) ? mysqli_real_escape_string($conn, $_
                 ON ih.medicine_id = m.medicineID
                 LEFT JOIN patient p
                 ON ih.patient_id = p.patientID
-                WHERE m.medicineName LIKE '%$search%'
+                LEFT JOIN barangay b
+                ON b.barangayID = p.barangayID
+                LEFT JOIN station s
+                ON s.stationID = b.stationID
+                WHERE m.medicineName LIKE '%$search%' AND 
+                s.stationID = '$stationID'
                 ORDER BY ih.date_created DESC 
                 LIMIT $start, $limit"
               );

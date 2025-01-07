@@ -95,7 +95,7 @@ if ($result && mysqli_num_rows($result) > 0) {
               $query .= " AND NOT ($completion_conditions)";
             }
 
-            $query .= " ORDER BY patientID DESC";
+            $query .= " GROUP BY p.patientSerialNumber ORDER BY patientID DESC";
             $result = mysqli_query($conn, $query);
 
             ?>
