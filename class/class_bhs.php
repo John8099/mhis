@@ -353,6 +353,95 @@ if (!class_exists('BHS')) {
       }
     }
 
+    public function checkAvailability($scheduleID, $stationID, $scheduleType)
+    {
+      global $conn;
+
+      $schedTypeArr = array(
+        "Calcium",
+        "Iodine",
+        "Deworming",
+        "Micronutrient"
+      );
+
+      if (in_array($scheduleType, $schedTypeArr)) {
+        $category = "";
+
+        switch ($scheduleType) {
+          case 'Calcium':
+            $query = "SELECT 
+                      cal.patientID AS 'patient_id',
+                      cal.calSchedTablets AS 'quantity'
+                    FROM calcium_sched cal 
+                    WHERE cal.calSchedID='$scheduleID'";
+            $category = "calcium";
+            break;
+          case 'Iodine':
+            $query = "SELECT 
+                      iod.patientID AS 'patient_id',
+                      iod.iodSchedTablet AS 'quantity'
+                    FROM iodine_sched iod 
+                    WHERE iod.iodSchedID ='$scheduleID'";
+            $category = "iodine";
+            break;
+          case 'Deworming':
+            $query = "SELECT 
+                      dew.patientID AS 'patient_id',
+                      dew.dwSchedTablet AS 'quantity'
+                    FROM deworming_sched dew 
+                    WHERE dew.dwSchedID='$scheduleID'";
+            $category = "deworming";
+            break;
+          case 'Micronutrient':
+            $query = "SELECT 
+                      mic.patientID AS 'patient_id',
+                      mic.ironSchedTablets AS 'quantity'
+                    FROM micronutrient_sched mic 
+                    WHERE mic.ironSchedID='$scheduleID'";
+            $category = "iron";
+            break;
+        }
+
+        $res = mysqli_query($conn, $query);
+        $scheduleData = mysqli_num_rows($res) > 0 ? mysqli_fetch_object($res) : null;
+
+        if ($scheduleData) {
+          $quantity = $scheduleData->quantity;
+
+          $medicineQ = mysqli_query(
+            $conn,
+            "SELECT
+              m.medicineID,
+              m.medicineName,
+              m.medicineCategory
+            FROM medicine m
+            WHERE m.medicineCategory LIKE '%$category%' LIMIT 1"
+          );
+
+          $medicine = mysqli_num_rows($medicineQ) > 0 ? mysqli_fetch_object($medicineQ) : null;
+
+          if ($medicine) {
+            $inventoryQ = mysqli_query(
+              $conn,
+              "SELECT *
+                FROM inventory i
+                WHERE i.stationID = '$stationID'
+                AND i.medicineID = '$medicine->medicineID'"
+            );
+
+            $inventory_data = mysqli_num_rows($inventoryQ) > 0 ? mysqli_fetch_object($inventoryQ) : null;
+
+            if ($inventory_data) {
+              if (intval($inventory_data->availableStock) < intval($quantity)) {
+                $result = "$medicine->medicineName has only $inventory_data->availableStock stock(s)";
+              }
+              return $result;
+            }
+          }
+        }
+      }
+    }
+
     public function updatePatientSched($scheduleID, $scheduleDate, $scheduleStatus, $scheduleType, $stationId)
     {
       global $conn;

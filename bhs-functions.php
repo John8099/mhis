@@ -281,7 +281,17 @@ function updatePatientSched($classBHS)
     $scheduleStatus = "Pending";
   }
 
-  $result = $classBHS->updatePatientSched($scheduleID, $scheduleDate, $scheduleStatus, $scheduleType, $stationId);
+  if ($scheduleStatus == "Completed") {
+    $checkAvailability = $classBHS->checkAvailability($scheduleID, $stationId, $scheduleType);
+    if (!$checkAvailability) {
+      $result = $classBHS->updatePatientSched($scheduleID, $scheduleDate, $scheduleStatus, $scheduleType, $stationId);
+    } else {
+      echo "<script>alert('$checkAvailability');window.location.href='./bhs_scheduled-patients';</script>";
+      exit();
+    }
+  } else {
+    $result = $classBHS->updatePatientSched($scheduleID, $scheduleDate, $scheduleStatus, $scheduleType, $stationId);
+  }
 
   if ($result) {
     header("Location: bhs_scheduled-patients");

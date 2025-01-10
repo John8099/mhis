@@ -150,7 +150,7 @@ foreach ($schedules as $schedule) {
   <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form action="bhs-functions.php" method="POST">
+        <form id="form-schedule" action="bhs-functions.php" method="POST">
           <div class="modal-header">
             <h5 class="modal-title" id="eventModalLabel">Schedule Details</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
